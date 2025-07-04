@@ -9,8 +9,6 @@ app = Flask(__name__)
 API_KEY = os.getenv("TA_CLE-API")
 API_SECRET = os.getenv("TA_CLE-SECRET")
 
-# ✅ Ton token secret sacré
-SECRET_TOKEN = "TON_TOKEN"
 
 # 🟢 NE PAS mettre testnet=True cette fois
 client = Client(API_KEY, API_SECRET)  # mode live = pas de testnet
