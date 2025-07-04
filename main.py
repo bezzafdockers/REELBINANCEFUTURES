@@ -6,11 +6,11 @@ import os
 app = Flask(__name__)
 
 # ✅ Clés API pour Binance Futures Testnet
-API_KEY = os.getenv("G5CE2xVrFMtmki3fRCCschkBktF6BBB5Ya75SVflGRSQquwzdbCSLGd9XpHkPIvu")
-API_SECRET = os.getenv("i9X1xxYoKBqgs1TZQsZYHc3Q621TIUHuXHkNBMOkuXa2E0RgWjTJoZHLISujMiAl")
+API_KEY = os.getenv("TA_CLE-API")
+API_SECRET = os.getenv("TA_CLE-SECRET")
 
 # ✅ Ton token secret sacré
-SECRET_TOKEN = "بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيْمِ"
+SECRET_TOKEN = "TON_TOKEN"
 
 # 🟢 NE PAS mettre testnet=True cette fois
 client = Client(API_KEY, API_SECRET)  # mode live = pas de testnet
