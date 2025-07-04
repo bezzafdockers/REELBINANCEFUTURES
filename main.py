@@ -5,10 +5,10 @@ import os
 
 app = Flask(__name__)
 
-# ✅ Clés API pour Binance Futures Testnet
-API_KEY = os.getenv("TA_CLE-API")
-API_SECRET = os.getenv("TA_CLE-SECRET")
-
+# ⚙️ Clés API Binance (réelles)
+API_KEY = os.getenv("BINANCE_API_KEY", "TA_CLE_API_ICI")
+API_SECRET = os.getenv("BINANCE_SECRET_KEY", "TON_SECRET_ICI")
+SECRET_TOKEN = "LA ILAH ILLA ALLAH"
 
 # 🟢 NE PAS mettre testnet=True cette fois
 client = Client(API_KEY, API_SECRET)  # mode live = pas de testnet
