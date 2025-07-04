@@ -9,6 +9,7 @@ app = Flask(__name__)
 # ⚙️ Configuration des clés API Binance
 API_KEY = os.getenv("BINANCE_API_KEY", "TA_CLE_API")
 API_SECRET = os.getenv("BINANCE_SECRET_KEY", "TON_SECRET")
+SECRET_TOKEN = "TON TOKEN SECRET"  # 🔐 Sécurité webhook
 
 client = Client(API_KEY, API_SECRET, testnet=True)  # Utilise le testnet de Binance Futures
 
