@@ -10,44 +10,44 @@ API_KEY = os.getenv("BINANCE_API_KEY", "TA_CLE_API_ICI")
 API_SECRET = os.getenv("BINANCE_SECRET_KEY", "TON_SECRET_ICI")
 SECRET_TOKEN = "LA ILAH ILLA ALLAH"
 
-# 🟢 NE PAS mettre testnet=True cette fois
-client = Client(API_KEY, API_SECRET)  # mode live = pas de testnet
-
+# ✅ Connexion à Binance Futures (mode réel)
+client = Client(API_KEY, API_SECRET)
 
 @app.route('/', methods=['POST'])
 def webhook():
     data = request.get_json()
-    print("📩 Reçu:", data)
+    print("Message reçu :", data)
 
     # 🔐 Vérifie le token secret
     if data.get("secret") != SECRET_TOKEN:
-        return jsonify({"status": "error", "message": "Token secret invalide"}), 403
+        return jsonify({"status": "error", "message": "Clé secrète invalide"}), 403
 
     try:
         symbol = data['symbol'].upper()
         side = data['side'].upper()
         qty = float(data['qty'])
-        order_type = data.get("type", "MARKET").upper()
-        reduce_only = any(k in data['action'] for k in ["TP", "SL", "Exit"])
+        order_type = data.get('type', 'MARKET').upper()
+        action = data.get("action", "").upper()
 
+        # 📦 Préparer la commande
         response = client.futures_create_order(
             symbol=symbol,
             side=side,
             type=order_type,
             quantity=qty,
-            reduceOnly=reduce_only
+            reduceOnly=True if 'TP' in action or 'SL' in action or 'EXIT' in action else False
         )
 
-        print("✅ Ordre exécuté:", response)
+        print("Ordre envoyé :", response)
         return jsonify({"status": "success", "order": response})
 
     except BinanceAPIException as e:
-        print("❌ Erreur Binance :", e)
+        print("Erreur Binance :", e)
         return jsonify({"status": "error", "message": str(e)})
 
     except Exception as e:
-        print("❌ Erreur système :", e)
+        print("Erreur interne :", e)
         return jsonify({"status": "error", "message": str(e)})
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     app.run(host="0.0.0.0", port=81)
