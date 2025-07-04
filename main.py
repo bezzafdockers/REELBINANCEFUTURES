@@ -6,8 +6,8 @@ import os
 app = Flask(__name__)
 
 # ⚙️ Clés API Binance (réelles)
-API_KEY = os.getenv("BINANCE_API_KEY", "TA_CLE_API_ICI")
-API_SECRET = os.getenv("BINANCE_SECRET_KEY", "TON_SECRET_ICI")
+API_KEY = os.getenv("G5CE2xVrFMtmki3fRCCschkBktF6BBB5Ya75SVflGRSQquwzdbCSLGd9XpHkPIvu")
+API_SECRET = os.getenv("i9X1xxYoKBqgs1TZQsZYHc3Q621TIUHuXHkNBMOkuXa2E0RgWjTJoZHLISujMiAl")
 SECRET_TOKEN = "LA ILAH ILLA ALLAH"
 
 # ✅ Connexion à Binance Futures (mode réel)
