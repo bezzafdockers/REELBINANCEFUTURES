@@ -5,20 +5,20 @@ import os
 
 app = Flask(__name__)
 
-# ⚙️ Clés API Binance (réelles)
-BINANCE_API_KEY = os.getenv("G5CE2xVrFMtmki3fRCCschkBktF6BBB5Ya75SVflGRSQquwzdbCSLGd9XpHkPIvu")
-BINANCE_SECRET_KEY = os.getenv("i9X1xxYoKBqgs1TZQsZYHc3Q621TIUHuXHkNBMOkuXa2E0RgWjTJoZHLISujMiAl")
+# ⚙️ Charge les variables d'environnement (doivent être définies sur Render)
+API_KEY = os.getenv("BINANCE_API_KEY")
+API_SECRET = os.getenv("BINANCE_SECRET_KEY")
 SECRET_TOKEN = "LA ILAH ILLA ALLAH"
 
-# ✅ Connexion à Binance Futures (mode réel)
+# ✅ Connexion à Binance Futures réel
 client = Client(API_KEY, API_SECRET)
 
 @app.route('/', methods=['POST'])
 def webhook():
     data = request.get_json()
-    print("Message reçu :", data)
+    print("📩 Message reçu :", data)
 
-    # 🔐 Vérifie le token secret
+    # 🔐 Vérification du token secret
     if data.get("secret") != SECRET_TOKEN:
         return jsonify({"status": "error", "message": "Clé secrète invalide"}), 403
 
@@ -29,7 +29,9 @@ def webhook():
         order_type = data.get('type', 'MARKET').upper()
         action = data.get("action", "").upper()
 
-        # 📦 Préparer la commande
+        print(f"📊 Envoi ordre : {side} {qty} {symbol} [{order_type}]")
+
+        # Envoi de l'ordre
         response = client.futures_create_order(
             symbol=symbol,
             side=side,
@@ -38,15 +40,15 @@ def webhook():
             reduceOnly=True if 'TP' in action or 'SL' in action or 'EXIT' in action else False
         )
 
-        print("Ordre envoyé :", response)
+        print("✅ Ordre envoyé :", response)
         return jsonify({"status": "success", "order": response})
 
     except BinanceAPIException as e:
-        print("Erreur Binance :", e)
+        print("⚠️ Erreur Binance :", e)
         return jsonify({"status": "error", "message": str(e)})
 
     except Exception as e:
-        print("Erreur interne :", e)
+        print("🔥 Erreur interne :", e)
         return jsonify({"status": "error", "message": str(e)})
 
 if __name__ == '__main__':
