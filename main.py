@@ -6,14 +6,15 @@ import os
 app = Flask(__name__)
 
 # ✅ Clés API pour Binance Futures Testnet
-API_KEY = os.getenv("BINANCE_API_KEY", "TA_CLE_API_ICI")
-API_SECRET = os.getenv("BINANCE_SECRET_KEY", "TON_SECRET_ICI")
+API_KEY = os.getenv("G5CE2xVrFMtmki3fRCCschkBktF6BBB5Ya75SVflGRSQquwzdbCSLGd9XpHkPIvu")
+API_SECRET = os.getenv("i9X1xxYoKBqgs1TZQsZYHc3Q621TIUHuXHkNBMOkuXa2E0RgWjTJoZHLISujMiAl")
 
 # ✅ Ton token secret sacré
 SECRET_TOKEN = "بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيْمِ"
 
-# ✅ Connexion à Binance Testnet
-client = Client(API_KEY, API_SECRET, testnet=True)
+# 🟢 NE PAS mettre testnet=True cette fois
+client = Client(API_KEY, API_SECRET)  # mode live = pas de testnet
+
 
 @app.route('/', methods=['POST'])
 def webhook():
